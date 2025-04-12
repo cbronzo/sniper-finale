@@ -9,11 +9,11 @@ SNIPER_SECRET = "moonaccess123"
 
 @app.route("/", methods=["GET"])
 def home():
-    return "🎯 Flask is up and running."
+    return "🎯 Docker-based Flask is running!"
 
 @app.route("/test", methods=["GET"])
 def test():
-    return jsonify({"status": "✅ THIS IS THE LIVE VERSION"}), 200
+    return jsonify({"status": "✅ Docker version live"}), 200
 
 @app.route("/send", methods=["POST"])
 def send_alert():
@@ -23,11 +23,11 @@ def send_alert():
             return jsonify({"error": "Unauthorized"}), 403
 
         message = data.get("message", "⚠️ Default test message")
-        response = requests.post(
+        resp = requests.post(
             f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
             data={"chat_id": CHAT_ID, "text": message}
         )
-        return jsonify({"status": "sent", "code": response.status_code}), 200
+        return jsonify({"status": "sent", "code": resp.status_code}), 200
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
 
