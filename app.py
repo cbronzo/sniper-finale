@@ -4,9 +4,9 @@ import requests
 
 app = Flask(__name__)
 
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHANNEL_ID")
-SNIPER_SECRET = os.getenv("SNIPER_SECRET")
+BOT_TOKEN = "7876168717:AAEZG9J10w9HjyHLYAF4F25REgNS01KLZcc"
+CHAT_ID = "-1002502682234"
+SNIPER_SECRET = "moonaccess123"
 
 # 🔹 Root route to confirm Flask is live
 @app.route("/", methods=["GET"])
