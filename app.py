@@ -12,13 +12,11 @@ def home():
 def gpt_relay():
     try:
         data = request.get_json()
-        print("INCOMING DATA:", data)
+        print("Incoming request JSON:", data)
 
-        if not data or "message" not in data:
-            return jsonify({
-                "error": "Missing 'message' field in payload",
-                "received_payload": data
-            }), 400
+        if "message" not in data:
+            print("Missing 'message' in data")
+            return jsonify({"error": "Missing 'message' field"}), 400
 
         telegram_response = requests.post(
             f"https://api.telegram.org/bot{os.environ['BOT_TOKEN']}/sendMessage",
@@ -27,6 +25,9 @@ def gpt_relay():
                 "text": data["message"]
             }
         )
+
+        print("Telegram API response code:", telegram_response.status_code)
+        print("Telegram API response body:", telegram_response.text)
 
         if telegram_response.status_code == 200:
             return jsonify({"status": "relayed and sent"}), 200
@@ -37,6 +38,7 @@ def gpt_relay():
             }), 500
 
     except Exception as e:
+        print("Exception occurred:", str(e))
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
